@@ -10,6 +10,7 @@ class Question(models.Model):
 
 
 class Choice(models.Model):
+    # Defining Many-to-one relationship with Question
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
