@@ -19,7 +19,8 @@ def detail(request, question_id):
 
 
 def results(request, question_id):
-    return HttpResponse(f"You're looking at the result of question {question_id}.")
+    question = get_object_or_404(Question, pk=question_id)
+    return render(request, "polls/results.html", {"question": question})
 
 
 def vote(request, question_id):
@@ -35,6 +36,9 @@ def vote(request, question_id):
             {"question": question, "error_message": "You didn't select a choice."},
         )
     else:
+        # This can result in race condition if a user retrieves a choice before the other user finishes updating it.
+        # e.g. user A gets 42 before user B updates it to 43
+        # now user A and B both saves 43 which should've been 44
         selected_choice.votes += 1
         selected_choice.save()
 
