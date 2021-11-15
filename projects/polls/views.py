@@ -5,7 +5,6 @@ from django.template import loader
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.views import generic
-from django.views.generic.detail import T
 
 from .models import Question, Choice
 
@@ -20,9 +19,9 @@ class IndexView(generic.ListView):
     # By default, ListView uses <app name>/<model name>_list.html
     template_name = "polls/index.html"
     # By default, this would've been "question_list"
-    context_object_name = "lastest_question_list"
+    context_object_name = "latest_question_list"
 
-    def get_queryset(self) -> QuerySet[T]:
+    def get_queryset(self) -> QuerySet[Question]:
         # Return the last 5 published questions
         return Question.objects.order_by("-pub_date")[:5]
 

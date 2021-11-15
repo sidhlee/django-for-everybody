@@ -11,9 +11,9 @@ urlpatterns = [
     # ex: /polls/5/
     # we can acesss 'detail' url from the template using {% url %} template tag and provide argument
     # to be inserted as question_id
-    path("<int:question_id>/", views.DetailView.as_view(), name="detail"),
+    path("<int:pk>/", views.DetailView.as_view(), name="detail"),
     # ex: /polls/5/results/
-    path("<int:question_id>/results/", views.ResultsView.as_view(), name="results"),
+    path("<int:pk>/results/", views.ResultsView.as_view(), name="results"),
     # ex: /polls/5/vote/
     path("<int:question_id>/vote/", views.vote, name="vote"),
 ]
