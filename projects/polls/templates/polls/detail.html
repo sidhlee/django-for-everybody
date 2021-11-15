@@ -2,14 +2,18 @@
 
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'polls:vote' question.id %}" method="post">
-{% comment %} All POST forms targeted at internal URLs should use csrf_token template tag {% endcomment %}
-{% csrf_token %}
-<ul>
-{% comment %} same as question.choice_set.all() {% endcomment %}
-{% for choice in question.choice_set.all %}
-  <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
-  <label for="choice{{ forloop.counter }}" >{{ choice.choice_text }}</label><br>
-{% endfor %}
-<input type="submit" value="Vote">
-</ul>
+{% if question.choice_set.all %}
+  <form action="{% url 'polls:vote' question.id %}" method="post">
+  {% comment %} All POST forms targeted at internal URLs should use csrf_token template tag {% endcomment %}
+  {% csrf_token %}
+  <ul>
+  {% comment %} same as question.choice_set.all() {% endcomment %}
+  {% for choice in question.choice_set.all %}
+    <input type="radio" name="choice" id="choice{{ forloop.counter }}" value="{{ choice.id }}">
+    <label for="choice{{ forloop.counter }}" >{{ choice.choice_text }}</label><br>
+  {% endfor %}
+  <input type="submit" value="Vote">
+  </ul>
+{% else %}
+  <p>No choices are available.</p>
+{% endif %}
