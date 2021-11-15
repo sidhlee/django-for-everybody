@@ -8,12 +8,18 @@ class Question(models.Model):
     # Also works as documentation
     pub_date = models.DateTimeField("date published")
 
+    def __str__(self):
+        return self.question_text
+
 
 class Choice(models.Model):
     # Defining Many-to-one relationship with Question
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text
 
 
 # Before we run migrate, We can check what SQL that migration would run
